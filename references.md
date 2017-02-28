@@ -1,3 +1,22 @@
+#### 1 Overview
+- Kaelbling et al. (1996) [Reinforcement Learning: A Survey](https://www.jair.org/media/301/live-301-1562-jair.pdf)
+  - 50ページ未満でコンパクトなサーベイ。この本はこのサーベイの現代版を目指している。
+- Bertsekas and Tsitsiklis (1996) [Neuro-Dynamic Programming](http://athenasc.com/ndpbook.html)
+  - 理論的な詳細について細かい本。例えば本書では割引報酬和の期待値を指標として最適化をする話しかないが、それ以外の指標についての記述もある。
+- Sutton and Berto (1998) [Reinforcement Learning: An Introduction](https://webdocs.cs.ualberta.ca/~sutton/book/the-book.html)
+  - 界隈で一番有名な本。第二版が執筆中である。
+- Bertsekas (2007a) [Dynamic Programming and Optimal Control, volume 1., 2.](http://www.athenasc.com/dpbook.html)
+- Bertsekas (2008) [Approximate dynamic programming (online chapter)](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.141.6891)
+  - 上記のBertsekas (2007)の下巻第6章。本文中ではBertsekas (2010)となっている。
+- Govsavi (2003) [Simulation-Based Optimization: Parametric Optimization Techniques and Reinforcement Learning](http://www.springer.com/us/book/9781489974907)
+  - 平均コスト問題
+- Cao (2007) [Stochastic Learning and Optimization: A Sensitivity-Based Approach](https://books.google.co.jp/books?id=Ot3J8AKuhLsC&lpg=PR7&ots=z-SHA2m4yc&lr=lang_en&hl=ja&pg=PA17#v=onepage&q&f=false)
+  - 方策勾配法に焦点をあてている本。とくに *sensitivity-based approach* と呼ばれるものを理論の中心としている。方策空間の中で二つの点（二つの方策）に関する性能を比べることが出来るので、それによって良い方策を直接探すアプローチのように見える（良い方策に更新して行けば方策反復になる）。方策をパラメトライズして滑らかに変えれば方策勾配法になる。
+- Powell (2007) [Approximate Dynamic Programming: Solving the curses of dimensionality](http://adp.princeton.edu/)
+  - オペレーションズ・リサーチの観点から説明している本。
+- Chang (2007) [Simulation-based Algorithms for Markov Decision Processes](http://castlelab.princeton.edu/ORF569papers/Fu%20-%20Simulation-based%20algorithms%20for%20MDPs.pdf)
+  - 適応サンプリングに焦点を当てている本。
+
 #### 3 Value prediction problems
 
 - Frank et al. (2008) [Reinforcement Learning in the Presence of Rare Events](http://www.machinelearning.org/archive/icml2008/papers/580.pdf) ICML
