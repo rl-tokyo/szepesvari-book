@@ -26,6 +26,18 @@ Bertsekas and Tsitsklis (1996)には`average cost per stage problem` につい�
 
 ## 2.2 Markov Decision Processes
 
+#### 最適符号化 (optimal coding) へのMDPの応用
+情報源の発生情報量を見積もるためには、背後にある情報を生成する確率モデルを推定する必要があり、一つのモデルとしてMDPが使われる。
+
+- マルコフ情報源とかで検索すると沢山関連資料がでてくる
+  - [情報理論- 第6回 情報源モデルと通信路モデル](http://web.tuat.ac.jp/~s-hotta/info/slide6.pdf)
+- 強化学習による定式化をした日本語での関連資料: [強化学習における収益の情報源符号化とその行動選択への応用](https://www.google.co.jp/webhp?sourceid=chrome-instant&rlz=1C5CHFA_enJP565JP565&ion=1&espv=2&ie=UTF-8#q=%E5%BC%B7%E5%8C%96%E5%AD%A6%E7%BF%92%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%8F%8E%E7%9B%8A%E3%81%AE%E6%83%85%E5%A0%B1%E6%BA%90%E7%AC%A6%E5%8F%B7%E5%8C%96%E3%81%A8%E3%81%9D%E3%81%AE%E8%A1%8C%E5%8B%95%E9%81%B8%E6%8A%9E%E3%81%B8%E3%81%AE%E5%BF%9C%E7%94%A8)
+
+#### センサーネットワーク (sensor network) へのMDPの応用
+ある基地局から別の基地局まで、他の基地局を経由しながら情報を適切に（短い距離で、失敗せずなど）送るためには動的計画法のような問題を解く必要がある、という理解。
+
+- 関連がありそうなサーベイ: Alsheikh et al. (2015) [Markov Decision Processes with Applications in Wireless Sensor Networks: A Survey](https://arxiv.org/pdf/1501.00644.pdf)
+
 #### ギャンブルの例の詳細
 下記リンクでは、実際にギャンブラーが毎回の賭けに勝つ確率を既知（つまりモデルが既知）とした上で動的計画法（価値反復）によって最適方策を求めている。
 
