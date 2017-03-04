@@ -36,6 +36,13 @@
 
 - Tadic (2004) [On the Almost Sure Rate of Convergence of Linear Stochastic Approximation Algorithms](http://ieeexplore.ieee.org/document/1266818/)
 
+## 3.2.1 TD(λ) with function approximation
+
+- Van Roy (2006) [Performance loss bounds for approximate value iteration with state aggregation](http://web.stanford.edu/~bvr/pubs/aggregation.pdf)
+  - 関数近似器を使ったときのTD(0)はTD(1)と比べてサンプル無限大で近似誤差が劣ってしまうが、（状態集約をしたときの）制御性能では劣っていないという文脈で引用されている論文。
+- Sutton et al. (2008) [Dyna-Style Planning with Linear Function Approximation and Prioritized Sweeping](https://arxiv.org/pdf/1206.3285.pdf)
+- Parr et al al. (2008) [An Analysis of Linear Models, Linear Value-Function Approximation, and Feature Selection for Reinforcement Learning](https://users.cs.duke.edu/~parr/icml08.pdf)
+
 ## 4.2.1 Online learning in bandits
 
 - Audibert et al. (2009) [Exploration-exploitation trade-off using variance estimates in multi-armed bandits](http://certis.enpc.fr/~audibert/Mes%20articles/TCS08.pdf)
