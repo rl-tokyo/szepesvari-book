@@ -43,6 +43,11 @@
 - Sutton et al. (2008) [Dyna-Style Planning with Linear Function Approximation and Prioritized Sweeping](https://arxiv.org/pdf/1206.3285.pdf)
 - Parr et al al. (2008) [An Analysis of Linear Models, Linear Value-Function Approximation, and Feature Selection for Reinforcement Learning](https://users.cs.duke.edu/~parr/icml08.pdf)
 
+## 3.2.3 Least-squares methods
+
+- Bertsekas et al. (2004) [Improved Temporal Difference Methods with Linear Function Approximation](http://web.mit.edu/dimitrib/www/TD_Policy_Eval_04.pdf)
+  - λ-LSPEとLSTD(λ)の比較の文脈で引用される。9.5節ではLSTDによって推定されるパラメータが真値へ収束するより速く，LSPEによって推定されるパラメータがLSTDによって推定されるパラメータへと収束する旨が主張されており、LSPEがLSTDに比類する根拠とされている。
+
 ## 4.2.1 Online learning in bandits
 
 - Audibert et al. (2009) [Exploration-exploitation trade-off using variance estimates in multi-armed bandits](http://certis.enpc.fr/~audibert/Mes%20articles/TCS08.pdf)
