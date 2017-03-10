@@ -47,6 +47,7 @@
 
 - Bertsekas et al. (2004) [Improved Temporal Difference Methods with Linear Function Approximation](http://web.mit.edu/dimitrib/www/TD_Policy_Eval_04.pdf)
   - λ-LSPEとLSTD(λ)の比較の文脈で引用される。9.5節ではLSTDによって推定されるパラメータが真値へ収束するより速く，LSPEによって推定されるパラメータがLSTDによって推定されるパラメータへと収束する旨が主張されており、LSPEがLSTDに比類する根拠とされている。
+- Lin (1992) [Self-Improving Reactive Agents Based On Reinforcement Learning, Planning and Teaching](https://pdfs.semanticscholar.org/9cd8/193a66cf53143cbba6ccb0c7b9c2ebf2452b.pdf)
 
 ## 4.2.1 Online learning in bandits
 
