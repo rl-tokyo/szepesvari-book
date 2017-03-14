@@ -50,6 +50,11 @@
 - Lin (1992) [Self-Improving Reactive Agents Based On Reinforcement Learning, Planning and Teaching](https://pdfs.semanticscholar.org/9cd8/193a66cf53143cbba6ccb0c7b9c2ebf2452b.pdf)
   - 経験再生を提案している論文
 
+## 3.2.4 The choice of the function space
+
+- Gyorfi et al. [A Distribution-Free Theory of Nonparametric Regression](http://web.stanford.edu/class/ee378a/books/book1.pdf) 2002
+  - p.192のTheorem11.3を強化学習の文脈に直してそのまま登場させている．
+
 ## 4.2.1 Online learning in bandits
 
 - Audibert et al. (2009) [Exploration-exploitation trade-off using variance estimates in multi-armed bandits](http://certis.enpc.fr/~audibert/Mes%20articles/TCS08.pdf)
