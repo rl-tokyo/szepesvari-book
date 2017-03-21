@@ -54,6 +54,13 @@
 
 - Gyorfi et al. [A Distribution-Free Theory of Nonparametric Regression](http://web.stanford.edu/class/ee378a/books/book1.pdf) 2002
   - p.192のTheorem11.3を強化学習の文脈に直してそのまま登場させている．
+- Munos&Szpezari 2008 [Finite-Time Bounds for Fitted Value Iteration](https://sites.ualberta.ca/~szepesva/papers/munos08a.pdf)
+  - 適合価値反復の有限サンプルにおける性能のバウンドを導いているという文脈で登場
+- Antos et al. 2007 [Learning Near-Optimal Policies with Bellman-Residual Minimization Based Fitted Policy Iteration and a Single Sample Path](https://hal.archives-ouvertes.fr/inria-00117130/document) COLT2006
+  - 近似方策反復法の有限サンプルにおける性能のバウンドを導いているという文脈で登場
+- Antos et al. 2008 [Fitted Q-iteration in continuous action-space MDPs](https://papers.nips.cc/paper/3233-fitted-q-iteration-in-continuous-action-space-mdps.pdf) NIPS2008
+  - 適合actor-criticの有限サンプルにおける性能のバウンドを導いているという文脈で登場
+  - `This algorithm, which we could also call a fitted actor-critic algorithm`
 
 ## 4.2.1 Online learning in bandits
 
