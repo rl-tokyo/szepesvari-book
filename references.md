@@ -106,6 +106,12 @@ Model-Based Reinforcement Learning](https://papers.nips.cc/paper/3197-online-lin
 - Szepesvari (2001) [Efficient Approximate Planning in Continuous
 Space Markovian Decision Problems](https://www.researchgate.net/profile/Csaba_Szepesvari/publication/2587899_Efficient_Approximate_Planning_in_Continuous_Space_Markovian_Decision_Problems/links/09e4150cb772a8e202000000.pdf)
   - オンラインのプランニングの文脈で引用されている論文。
+- Even-Dar et al. 2005 [Experts in a Markov Decision Process](https://papers.nips.cc/paper/2730-experts-in-a-markov-decision-process.pdf)
+  - `online learning in MDPs with arbitrary reward processes` の例として引用されている。
+- Nu et al. 2009 [Markov Decision Processes with Arbitrary Reward Processes](https://link.springer.com/chapter/10.1007/978-3-540-89722-4_21)
+  - `online learning in MDPs with arbitrary reward processes` の例として引用されている。
+- Neu et al. 2010 [The Online Loop-free Stochastic Shortest-Path Problem](http://colt2010.haifa.il.ibm.com/papers/125neu.pdf)
+  - `online learning in MDPs with arbitrary reward processes` の例として引用されている。
 
 ## 5.2.0 Applications
 - Simao et al. (2008) [An Approximate Dynamic Programming Algorithm for Large-Scale Fleet Management: A Case Application](http://castlelab.princeton.edu/Papers/Simao_et_al_SchneiderNational.pdf)
