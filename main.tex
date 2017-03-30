@@ -1,0 +1,35 @@
+\documentclass{jsarticle}
+\usepackage[fleqn]{amsmath}
+\usepackage{graphicx}
+
+% commands
+\newcommand{\argmin}{\mathop{\rm argmin}}
+\newcommand{\argmax}{\mathop{\rm argmax}}
+\newcommand{\States}{\mathcal{X}}
+\newcommand{\Actions}{\mathcal{A}}
+\newcommand{\st}{x}
+\newcommand{\St}{X}
+\newcommand{\action}{a}
+\newcommand{\nextaction}{a'}
+\newcommand{\Action}{A}
+\newcommand{\Nextaction}{A'}
+\newcommand{\reward}{r}
+\newcommand{\Reward}{R}
+\newcommand{\MDP}{\mathcal{M}}
+\newcommand{\nextstate}{y}
+\newcommand{\Nextstate}{Y}
+
+\date{}
+\title{szepesvari本: 数式補足}
+
+\begin{document}
+\maketitle
+
+\section*{2.4 Dynamic programming algorithms for solving MDPs}
+
+\subsection*{$Q^{k}$に対してグリーディな方策に関するバウンドの証明}
+\begin{equation}
+V^\pi(\st) \ge V^*(\st) - \frac{2}{1-\gamma} \, \|Q-Q^*\|_{\infty}
+\end{equation}
+
+\end{document}
