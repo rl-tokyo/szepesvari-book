@@ -24,8 +24,13 @@
 ## 3 Value prediction problems
 
 - Frank et al. (2008) [Reinforcement Learning in the Presence of Rare Events](http://www.machinelearning.org/archive/icml2008/papers/580.pdf) ICML
-  - `estimating the failure probability of a large power grid` と書いてあるが電力の話はしてない。 **[TODO: 提案手法の内容を簡単に説明する]**
-実データへの応用として、非常に低い確率であるはあるが、経路が遮断されることを考慮に入れた通信ネットワークのプランニングへと応用をしている。
+  - `estimating the failure probability of a large power grid` と書いてあるが電力の話はしてない。 
+  - 具体的手法としてのポイントは以下二点
+	- 状態遷移確率に稀なイベントを表す項を追加し、問題の状況を表現している（稀なイベントの遷移を切り離して扱えるようにしている）
+	- sampling weightを導入し、更新速度が遅くなる懸念とバリアンスの問題に対応している（ASA; adaptive importance sampling algorithm）
+		- この論文では、さらにREASA（rare events adaptive stochastic approximation）という拡張を行い、TD(λ)よりも学習効率が良いことをシミュレーションで示している
+  - 実データへの応用として、非常に低い確率であるはあるが、経路が遮断されることを考慮に入れた通信ネットワークのプランニングへと応用をしている。
+	- 北米10都市のネットワークトラフィック問題（年3%程度の確率で需要スパイクが発生する状況で、トラフィックをどう捌くかという問題）に適用
 
 ## 3.1.1 Tabular TD(0)
 
