@@ -18,12 +18,27 @@
 \newcommand{\MDP}{\mathcal{M}}
 \newcommand{\nextstate}{y}
 \newcommand{\Nextstate}{Y}
+\newcommand{\Var}[1]{{\mathrm{Var}}\left[#1\right]}
 
 \date{}
 \title{szepesvari本: 数式補足}
 
 \begin{document}
 \maketitle
+
+\section*{2.1.2 逐一訪問モンテカルロ法}
+
+\paragraph{$\Var{\hat{V}_t(3)} \approx 1/(10\,k)$?}
+状態$3$から状態$4$への遷移が$n = 10k$回観測されたとすると，
+価値関数はベルヌーイ分布に従う確率変数$X_1, \ldots, X_n$を使って
+$\hat{V}_t(3) = \sum_{k=1}^n X_k / n$と推定できる．
+ここで，$Y = \sum_{k=1}^n X_k$は$n$回コインを投げて何回表が出るかに対応するので，
+二項分布に従う．
+二項分布の分散は$n\,p(1-p)$なので，
+\begin{equation}
+\Var{\hat{V}_t(3)} = n \cdot \Var{Y} = \frac{p(1-p)}{n}
+\end{equation}
+となる．
 
 \section*{2.4 Dynamic programming algorithms for solving MDPs}
 
