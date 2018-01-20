@@ -1,6 +1,9 @@
 \documentclass{jsarticle}
 \usepackage[fleqn]{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{comment}
 
 % commands
 \newcommand{\argmin}{\mathop{\rm argmin}}
@@ -31,5 +34,179 @@
 \begin{equation}
 V^\pi(\st) \ge V^*(\st) - \frac{2}{1-\gamma} \, \|Q-Q^*\|_{\infty}
 \end{equation}
+
+\section*{4.2 Closed-loop interactive learning}
+\subsection*{4.2.3 Active learning in Markov Decision Processes}
+MDPにおけるactive learningの理論研究は希少．以下，``Deterministic MDP''という単語が結構出てくるが，何が決定論的なのか曖昧．ひとまず状態遷移が決定論的，という意味で捉える．
+\subsubsection*{決定論的なMDPにおける一様バウンド}
+\begin{itemize}
+\item{遷移構造を知る}
+\begin{itemize}
+\item{Efficient Exploration In Reinforcement
+Learning [Thrun 1992]\\}
+主張: $n=|\mathcal{X}|, m=|\mathcal{A}|$として，$l$を状態空間の深さ（とは？），$d$を各状態で許される行動の最大数としたとき，状態遷移構造を知るには$O(n^2ld)$回の探索が必要（たぶん）
+
+\item{この本における改善の指摘\\}
+主張: 各状態行動において，知らない行動を伴う状態の中で最も近い状態に到達するには高々n-1回かかる．そのあと知らない行動をとる．これを$nm$回行えばよいので，$n^2m$回の探索で十分（超自明）．これが漸近的にタイト（探索回数がこの式のオーダーで漸近的に上下から抑えられる）になる例を作れる．勉強会中のホワイトボードの例は$n(n+1)(m-1)/2 + n$回の探索が必要だったが、$k1=1/2,k2=1$として上下から抑えられるので漸近的にタイト．
+\end{itemize}
+\item{遷移構造が既知のときに，報酬関数（確率的）を推定する}
+\begin{itemize}
+\item{Hoeffdingの不等式により報酬関数の推定精度をバウンド\\}
+主張: 各状態，行動の組について$k=\log(nm/\delta) / \epsilon^2$回以上訪問すれば，$1-\delta$以上の確率で，$\epsilon$の精度で報酬関数を推定できる．
+
+\ 本の中では明言していないが，報酬関数の値域が$[0,1]$であることを仮定しているはず．このとき，サンプルサイズ$k\ge \log(2nm/\delta)/2\epsilon^2$で，union bound とHoeffdingの不等式より
+\begin{eqnarray*}
+\Pr[\cap_{x,a} \{|\hat{r}(x,a) - r(x,a)| < \epsilon\}] &=& 1 - \Pr[\cup_{x,a} \{|\hat{r}(x,a) - r(x,a)\}| \ge \epsilon]\\
+&\ge& 1- \sum_{x,a}\Pr[|\hat{r}(x,a) - r(x,a)| \ge \epsilon]\\
+&\ge& 1-\sum_{x,a}\delta/nm\\
+&=& 1- \delta
+\end{eqnarray*}
+
+\ 疑問: 本の主張と$k$の値が定数倍違うので著者に確認したい．
+\end{itemize}
+\item {遷移構造が分かり，報酬関数を推定したあとで，方策を学習する}
+\begin{itemize}
+\item{方策の精度をバウンド\\}
+主張1: 各状態で最適価値関数と推定方策の価値関数の差が$4\gamma\epsilon/(1-\gamma)^2$以下になる（why?）．
+
+\ 主張2: 最終的に，$\epsilon$-最適な方策を得るには，$\gamma \ge 0.5$のとき，高々$n^2m + 4e\log(nm/\delta)/((1-\gamma)^2\epsilon)^2$のステップが必要．
+
+\ $k$の値に本の値を使うと，$\epsilon_r = (1-\gamma)^2\epsilon/2$の精度で報酬関数を推定するには，各状態，行動の組について$4\log(nm/\delta)/((1-\gamma)^2\epsilon)^2$回の探索が必要で，このとき方策の精度は$2\gamma\epsilon$なので，$\gamma \le 0.5$であれば$\epsilon$-最適．全状態，行動を一回ずつ見るのに高々$e$回かかるとすると，単純に$e$倍すればいい（第二項目）．第一項目は遷移構造を知る部分．
+
+\ 疑問1: 主張1の不等式の根拠がわからない
+
+\ 疑問2: $\gamma \ge 0.5$だと$\epsilon$-最適性を示せないと思う．不等号逆では？
+\end{itemize}
+\end{itemize}
+
+\subsubsection*{確率的なMDPにおける一様バウンド}
+決定論的なMDPのときに示したような一様最適性を示した研究は，筆者の知る限りなかったらしい．Even-Darらは，MDPの状態を任意の状態にリセットできるという（強い）仮定のもとで，有限MDPにおけるactive learning学習問題を考察したらしい．
+
+\subsubsection*{ランダムな探索の難しさ}
+ランダムに探索を行うと，状態空間の全状態を訪問するまでに，状態空間のサイズ$n$に対して指数関数的な時間がかかる場合がある．例として，$1,\ldots,n$のノードが並んだ一本鎖の状態空間を持ち，$\{L_1,L_2,R\}$からなる行動空間を持つMDPを考える．ここで，$L_1,L_2$は左方向に一つ進み，$R$は右方向に一つ進む行動であり，端点から外に出ようとする行動をとったときには状態は動かないとする（状態遷移は決定論的）．このとき，端から端まで（$1$から$n$まで）の移動にかかる時間の期待値は$3(2^n-n-1)$であると (Howard 1960) で示されたらしい．元論文にアクセスできないのでここで証明する (イメージは http://dopal.cs.uec.ac.jp/okamotoy/lect/2014/dme/handout13.pdf を参照)．
+
+\begin{proof}
+$X_t$を時刻$t$における状態$n$までの距離とする（$0 \le X_t \le n-1$）．また，$T_{k} = \mathbb{E}[\min \{ t | X_t = 0 \} | X_0 = k]$と定義する．これは状態$n-k \ (0\le k \le n-1)$から状態$n$までの移動にかかる時間の期待値を意味するので，$T_{n-1}$が求めるべき期待値の値である．漸化式は以下のように書ける．
+\begin{eqnarray*}
+T_{k} = \begin{cases}
+    0 & (k=0) \\
+    1 + \frac{2}{3}T_{k+1} + \frac{1}{3}T_{k-1} & (1\le k \le n-2) \\
+    T_{n-2} + 3 & (k = n-1)
+  \end{cases}
+\end{eqnarray*}
+ここで，$U_k = T_{k+1} - T_{k}\  (0\le k \le n-2)$とおくと，
+\begin{eqnarray*}
+\begin{comment}
+U_k = \begin{cases}
+0 & (k=0)\\
+\frac{1}{2}U_{k-1} - \frac{3}{2} & (1\le k \le n-2)
+\end{cases}
+\end{comment}
+U_k = \frac{1}{2}U_{k-1} - \frac{3}{2}
+\end{eqnarray*}
+が成り立つ．これを用いて漸化式をぐっと眺めると，以下のように展開できる．
+\begin{eqnarray*}
+T_k &=& \Bigl(\sum_{i=0}^{k-1}(1/2)^i\Bigr)U_0 - 3 \sum_{i=1}^{k-1}\sum_{j=1}^i (1/2)^j\\
+&=& 2(1-\frac{1}{2^k})U_0 - 3(k-2+\frac{1}{2^{k-1}})
+\end{eqnarray*}
+ここに，$k=n-1$の場合の式を代入して計算すると，
+\[U_0 = 3(2^{n-1}-1)
+\]
+となる．よって，求める期待値は，
+\begin{eqnarray*}
+T_{n-1} &=& 2(1-\frac{1}{2^{n-1}})  3(2^{n-1}-1) - 3(n-3+\frac{1}{2^{n-2}})
+\\
+&=& 3(2^n-2-n+3-\frac{1}{2^{n-2}}-2+\frac{1}{2^{n-2}})\\
+&=& 3(2^n-n-1)
+\end{eqnarray*}
+\end{proof}
+もしこのMDPにおける報酬が状態$n$でしか正にならなかったとすると，ランダムな探索を通して全状態行動対への十分な訪問を行ってから活用を行うような戦略では，報酬ゼロが続いてregretが大きくなる．なお，行動価値関数に基づいた素朴な探索戦略をとってもこの問題はそれほど改善しないらしい．一方，系統的に探索を行う戦略をとれば，$O(n)$で全状態（ないしは全状態行動対）を訪問できるので，尊い．
+
+\subsubsection*{リセットのないactive learning}
+これまでの話とよく似ているが，推定方策の``一様な''最適性ではなく，trajectoryの上で訪問した状態における最適性を評価するところがおそらく違っている．このように評価方法を緩めると，確率的なMDPでも色々なバウンドが出せる．model-basedな手法をいくつか紹介．
+
+\begin{itemize}
+\item{E$^3$\ (Explicit Explore or Exploit) アルゴリズム \\}
+https://www.cis.upenn.edu/~mkearns/papers/reinforcement.pdf のP22参照\\
+以下の戦略をとると，discountedな場合は多項式オーダーで探索が終わる．
+\begin{itemize}
+\item{一定回数以上訪問されていない状態からは，過去に最もとっていない行動を選ぶ}
+\item{一定回数以上訪問された状態からは，そのときに推定された方策が一定以上良ければ，活用を行う．}
+\end{itemize}
+
+\ 疑問1: 論文見てると，活用フェーズで，undiscountedな場合は$T$（mixing time）回活用を行う（停止はしない）が，discountedな場合は停止するように見える．理解合ってる？respectivelyが乱用されてて読めない．
+
+\ 疑問2: 翻訳の``そこへの探索は止める''という表現がよくわからない．``そこ''が良い方策が見つかった状態を意味するとしたら，``その状態に向かう探索を止める''というよりは，``その状態からは探索ではなく活用を行う''というイメージに見える．``そこへの''がない方が良いかも？
+%言葉のあやかもしれないが，論文中のAttempted explorationに入ったら，knownな状態へも探索されてしまいそう（unknownな状態にsignificant probabilityで到達するとは言ってるけど，knownな状態に行かないとは言ってないのでは？）
+
+\item{R-maxアルゴリズム: E$^3$の改良\\}
+以下の戦略をとると，（active learningにおける最適性を満たすまでの）探索回数が$\tilde{O}\Bigl(\frac{n^2mV_{max}^3}{\epsilon^3(1-\gamma)^3}\Bigr)$
+\begin{itemize}
+\item{観測が十分にない状態行動対に対しては，報酬を最大値に固定する}
+\item{観測が十分たまったものについては，価値反復して方策を学習}
+\end{itemize}
+
+\item{Domingoによる適応サンプリング\\}
+状態遷移がほぼ決定論的なときには効率が良いらしい
+\item{SimsekとBartoによる実問題でのパフォーマンス評価もあるらしい}
+\end{itemize}
+実用性の評価はあまり行われていない．E$^3$やR-maxはundiscountedな場合では$\epsilon$-mixing timeが分からないといつアルゴリズムを停止させるべきかわからない．
+
+\subsection*{4.2.4 Online learning in Markov Decision Processes}
+MDPにおける探索活用並行学習に話を戻す．regretにより評価するUCRL2と，PAC-MDPという基準で評価する遅延Q学習とMORMAXの概要を説明する．おまけとして，KWIKとベイジアンアプローチの紹介も行う．
+
+\subsubsection*{regret最小化とUCRL2}
+ざっくり言うと，新しい情報が十分収集できるまでは今の推定方策に従って情報を集め，収集できたらモデルと方策を更新するModel-basedな手法である．方策の更新部分が本のアルゴリズム$11$（OPTSOLVE）に相当し，肝になる．これは元論文（http://www.jmlr.org/papers/volume11/jaksch10a/jaksch10a.pdf）ではExtended Value Iteration（拡張価値反復）と呼ばれている．
+
+理論保証については，報酬の値域が$[0,1]$で，すべての決定論的方策が全状態を確率$1$で訪問する（unichainな）MDPのクラスを考えている．また，MDPの直径$D$（ある状態から他の状態にたどり着くために要する平均ステップ数の最大値）という概念を導入している．示しているバウンドは二通り．
+\begin{itemize}
+\item{最適方策と次善方策の性能の差を$g$を使うregretバウンド\\}
+\[
+O(D^2n^2m\log T/g)
+\]
+\item{$g$を使わないregretバウンド\\}
+\[
+O(Dn\sqrt{mT\log T})
+\]
+\end{itemize}
+後者は$T$については悪化するが，前者は$g$が小さいとき緩いバウンドになることに注意．なお，直径$D$が無限大のときは無意味なバウンドになる．MDPのいくつかのパラメータが与えられたという仮定のもとでは，Bartlett and Tewari (2009) により$D$が無限大のときの上界が示されている．
+
+理論はつらいので，以降では拡張価値反復のアルゴリズムを説明する．よくある価値反復は，報酬関数$r(x,a)$と確率遷移カーネル$\mathcal{P}(\cdot,x,a)$を用いて，各状態$x\in\mathcal{X}$に対して，適当な終了条件のもとで以下の反復を行う．
+\begin{eqnarray*}
+V_0(x) &=& 0\\
+V_{k+1}(x) &=& \max_{a\in\mathcal{A}} \{ r(x,a) + \sum_{y \in \mathcal{X}}\mathcal{P}(y,x,a)V_{k}(y) \}
+\end{eqnarray*}
+一方の拡張価値反復では，推定報酬に不確実性ボーナスを加えた$r'_{k}(x,a)$と，価値関数の推定値$V_k$の値が小さい状態には訪問しにくくなるようバイアスを加えた推定確率遷移カーネル$\mathcal{P}'_{k}(\cdot,x,a)$を用いて，価値反復と同様の操作を行う．
+\begin{eqnarray*}
+V_0(x) &=& 0\\
+V_{k+1}(x) &=& \max_{a\in\mathcal{A}} \{ r'_{k}(x,a) + \sum_{y \in \mathcal{X}}\mathcal{P}'_{k}(y,x,a)V_{k}(y) \}
+\end{eqnarray*}
+ここで，$r'_{k}(x,a)$と$\mathcal{P}'_{k}(\cdot,x,a)$の構成方法は教科書のアルゴリズム$11$の$8$行目から$17$行目を参照したいところだが，教科書には誤植があると思われることに注意．具体的には，$16$行目は$\min (0,1-P)$ではなく$\max (0,1-P)$であり，$17$行目は$P + p[idx[j]] > 1$ではなく，$ P + p[idx[j]] \le 1$だと思われる．そうじゃないとアルゴリズムが停止しないし確率も意味不明な値になる．
+
+教科書のアルゴリズムがバグる例として，$4$つの状態からなるMDPを考える。時刻$t$において$V_t(1) < V_t(2) < V_t(3) < V_t(4)\ , p[1] = 0.4,\ p[2] = 0.3,\ p[3]=0.2,\  p[4] =0.1,\ c=0.2$となったとき，アルゴリズムの$11$行目により$p[4] =0.2$になる．このとき，$\sum_{i=1}^4 p[i] = 1.1$であり，$13$から$17$行目までに入ると，$j=4$のとき$p[1] = 0$になる．このとき，$\sum_{i=1}^4 p[i] = 0.7$なのでrepeatされる．そのまま続けると$p[2]=p[3]=p[4]=0$になって，全確率が$0$の遷移カーネルができあがり！なお，修正後のアルゴリズムでは$p[1]=0.3,\ p[2]=0.3,\ p[3]=0.2,\ p[4]=0.2$でアルゴリズムが終了する．つまり，価値関数の推定値$V_k$の値が小さい状態（状態$1$）には訪問しにくくなるようバイアスを加えた推定確率遷移カーネルが得られる．
+
+アルゴリズム$11$の$27$行目の停止条件は$\max_x \{V_{k+1}(x) - V_{k}(x)\} -\min_x \{V_{k+1}(x) - V_{k}(x)\} \le 1/\sqrt{t}$となっているが，この根拠は元論文のTheorem $7$による．
+
+しかし，アルゴリズムを見ただけでは，これがどういうMDPの価値反復問題を解いているのかのイメージが見えてこない．教科書では，plausible MDPのクラスの中から，おおよそ最高の平均報酬を達成するモデルと方策の組を見つけるタスクになっていると書かれている．この拡張されたMDPの行動空間はactionと確率遷移カーネルの組で構成されているらしいが，証明をちゃんと読まないと，拡張価値反復と拡張されたMDPの対応はクリアにわからないと思う（私はまだ分かっていない）．
+
+
+
+\subsubsection*{PAC-MDP}
+学習器の将来の期待収益が，最適な収益を特定のマージンより下回る試行数（失敗数，sample complexity）を最小限にすることを目的にする．高い確率で，失敗数と計算時間を多項式オーダーで抑えるアルゴリズムはPAC-MDPと呼ばれる．
+\subsubsubsection*{MORMAX https://github.com/rl-tokyo/survey/pull/14/files 参照}
+有限MDPにおけるModel-basedのMORMAX (MOdified RMAX) は，SoTAのsample complexity $\tilde{O}(n)$を達成．訪問数が少ないところの報酬関数を上限値Rmaxに固定して探索に使うところが肝．sample complexityによって性能を測るとRMAXより良い．遅延Q学習と比べると$V_{max}$のオーダーは良い．mixing timeのようなパラメータを知らなくても動かせる．
+\subsubsubsection*{遅延Q学習}
+有限MDPにおけるModel-freeな遅延Q学習は，$n$についてはSoTAのsample complexity $\tilde{O}(n)$を達成．他の手法と似ていて，情報を貯めてからQ関数の更新を行う．http://cseweb.ucsd.edu/~ewiewior/06efficient.pdf 参照
+\subsubsection*{KWIK　http://www.research.cs.rutgers.edu/~lihong/pub/Li12Sample.pdf}
+教科書では大きい状態空間への対応として，問題を特定のMDPに絞ってメタアルゴリズムを使用するKakade et al. (2003) と Strehl and Littman (2008) の研究が紹介されている．連続空間への対応は，KaKadeらの実装をしたJong and Stone (2007) と，多重解像度回帰木と適合Q反復を実装した Nouri and Littman (2009) の研究が紹介されている．KWIKは教科書には載ってない手法だが，連続空間への対応として重要そうなので誰か読んでほしい．これらに共通するのは，系統的な探索（明示的な探索制御）が大事ということらしい．
+
+\subsubsection*{探索にベイジアンアプローチを使う}
+ベイジアン？知らない子ですね・・・\\
+探索の問題をパラメータのサンプリング計算手続きに帰着できるのでわかりやすいという点は素敵だが，計算時間がかかるという困難はバンディット問題の場合より顕著になると言われている． Bayesian Reinforcement LearningとかBayesian Adaptive MDP (BAMDP) とか言われるやつかな？
+
+\subsubsection*{次回へのつなぎ}
+``系統立った探索が潜在的なパフォーマンスを大きく向上しうるにもかかわらず,強化学習の実用例ではそのような探索が検討されていなかったり,されていても経験則的な方針がとられていたりすることが多い''\\
+``まあ確かに楽観的な初期値で十分なときもある''\\
+``けどやっぱり，色々な探索を考えよう！そのときに効率的な学習アルゴリズムがあると便利だから，次の章で話すよ！''
 
 \end{document}
