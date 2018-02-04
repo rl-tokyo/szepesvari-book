@@ -45,6 +45,21 @@ Bertsekas and Tsitsklis (1996)には `average cost per stage problem` につい�
 
 - [Suttton and Barto (1998) のギャンブルに関する詳細な説明](http://webdocs.cs.ualberta.ca/~sutton/book/4/node5.html#SECTION00140000000000000000)
 
+# 3. Value prediction problems
+
+#### Reinforcement learning in the presence of rare events (Frank et al., 2008)
+- 「大規模な電気通信ネットワークにおける接続失敗率の推定」事例として紹介されている
+- 稀に起こるが、大きな影響を持つイベントをMDP問題として解いた論文
+	- 通常のMDPだと、探索の際に遭遇する確率が低いため学習が遅れたり、バリアンスが大きくなる懸念がある
+	- 状態遷移確率を定常項とイベント項に分解して、sampling weightを導入している（ASA; adaptive importance sampling algorithm）
+	- さらにこの論文では、上記2つの遷移確率が不確かな場合にも拡張を行っており、TD(λ)よりも学習効率がいいことをシミュレーションで確認している（REASA; rare events adaptive stochastic approximation）
+	- 実験として、北米10都市のネットワークトラフィック問題に適用している
+		- 年3%程度の確率で需要スパイクが発生する状況で、どのようにトラフィックを捌くべきかを扱う問題
+
+#### Estimating taxi-out times with a reinforcement learning algorithm (Balakrishna et al., 2008)
+- FAAのデータを元に、滑走路での飛行機の走行時間を確率的動的計画法を用いて推定した論文
+- JFK空港の実験で、60%（誤差5min以内で予測できた確率）の予測精度を達成している
+
 ## 3.2 Algorithms for large state spaces
 
 #### タイルコーディングに関連した文献
